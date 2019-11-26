@@ -1,24 +1,24 @@
 <?php
 
-require_once('connection.php');
-
-try {
-  $results = $db->query('SELECT * FROM entries ORDER BY DATE DESC');
-  $entries = $results->fetchAll(PDO::FETCH_ASSOC);
-  //print_r($entries);
-  //die();
-} catch (Exception $e){
-  echo $e->getMessage();
-  die();
-}
+require_once('./inc/connection.php');
+include('./inc/functions.php');
 include('./inc/header.php');
+$tag=null;
+$pageTitle="All Entries";
+if(isset($_GET['tag'])){
+  $tag = filter_input(INPUT_GET,'tag',FILTER_SANITIZE_STRING);
+  $pageTitle = "Entries tagged '$tag'";
+}
+
 ?>
 
 
 <section>
   <div class="container">
+    <h1><?= $pageTitle; ?></h1>
+    <hr />
     <div class="entry-list">
-      <?php foreach($entries as $entry) {
+      <?php foreach(get_entries_list($tag) as $entry) {
       $vardate = explode('-',$entry['date']);
       $year = intval($vardate[0]);
       $month = date('F',mktime(0,0,0,intval($vardate[1])));

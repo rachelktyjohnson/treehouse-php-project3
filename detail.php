@@ -1,6 +1,6 @@
 <?php
 
-require_once('connection.php');
+require_once('./inc/connection.php');
 
 if (isset($_POST['delete'])){ //this contains the ID to be deleted
   try {

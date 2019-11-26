@@ -1,5 +1,6 @@
 <?php
-include('./connection.php');
+include('./inc/connection.php');
+include('./inc/functions.php');
 $id = $title = $date = $time_spent = $learned = $resources = $error_message ="";
 if (isset($_GET['id'])){
   $id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_NUMBER_INT);
@@ -23,15 +24,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
   $time_spent = filter_input(INPUT_POST,'timeSpent',FILTER_SANITIZE_STRING);
   $learned = filter_input(INPUT_POST,'whatILearned',FILTER_SANITIZE_STRING);
   $resources = filter_input(INPUT_POST,'ResourcesToRemember',FILTER_SANITIZE_STRING);
-
-  //function to check if input was empty
-  function isFilled($input){
-    if ($input==""){
-      return false;
-    } else {
-      return true;
-    }
-  }
 
   //if all inputs are filled and pass validation
   if ( isFilled($title) && isFilled($date) && isFilled($time_spent) && isFilled($learned) ){
@@ -94,7 +86,7 @@ include('./inc/header.php');
         <label for="resources-to-remember">Resources to Remember</label>
         <textarea id="resources-to-remember" rows="5" name="ResourcesToRemember"><?= $resources; ?></textarea>
         <input type="hidden" name="id" value="<?= $id?>" />
-        <input type="submit" value="<?php if(empty($id)){echo "Publish";} else {echo "Edit";} ?> Entry" class="button">
+        <input type="submit" value="<?php if(empty($id)){echo "Publish";} else {echo "Save";} ?> Entry" class="button">
         <a href="#" class="button button-secondary">Cancel</a>
       </form>
     </div>

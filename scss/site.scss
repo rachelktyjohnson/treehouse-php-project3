@@ -101,6 +101,7 @@ h1, h2, h3 {
 h1 {
   font-size: 44px;
   margin-bottom: 12px;
+  text-align:center;
 }
 
 h2 {
@@ -146,6 +147,12 @@ ul li {
 /* ==========================================================================
    Page Styles
    ========================================================================== */
+
+hr{
+  border:1px solid #678f89;
+  width:40%;
+  margin-top:50px;
+}
 
 .entry-list, .edit-entry, .new-entry {
   max-width: 800px;
