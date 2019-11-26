@@ -170,11 +170,25 @@ ul li a {
   padding-bottom: 80px;
   text-align: center;
   margin: 0 auto;
+  font-size: 18px;
 }
-.edit a {
+.edit p {
+  margin: 0;
+}
+.edit p a {
   font-weight: 400;
   text-transform: uppercase;
-  font-size: 18px;
+}
+.edit form #delete-entry {
+  background: none;
+  border: 0;
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: red;
+  opacity: 0.3;
+}
+.edit form #delete-entry:hover {
+  opacity: 1;
 }
 
 .entry .error_message p {

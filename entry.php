@@ -1,8 +1,23 @@
 <?php
+include('./connection.php');
+$id = $title = $date = $time_spent = $learned = $resources = $error_message ="";
+if (isset($_GET['id'])){
+  $id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_NUMBER_INT);
+  $results = $db->prepare('SELECT * FROM entries WHERE id=?');
+  $results->bindParam(1, $id,PDO::PARAM_INT);
+  $results->execute();
+
+  $entry = $results->fetch(PDO::FETCH_ASSOC);
+  //print_r($entry);
+  $title=$entry['title'];
+  $date=$entry['date'];
+  $time_spent=$entry['time_spent'];
+  $learned=$entry['learned'];
+  $resources=$entry['resources'];
+
+}
 
 if($_SERVER['REQUEST_METHOD']=="POST"){
-  echo "posted!";
-  $title = $date = $time_spent = $learned = $resources = $error_message ="";
   $title = filter_input(INPUT_POST,'title',FILTER_SANITIZE_STRING);
   $date = filter_input(INPUT_POST,'date',FILTER_SANITIZE_STRING);
   $time_spent = filter_input(INPUT_POST,'timeSpent',FILTER_SANITIZE_STRING);
@@ -22,22 +37,35 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
   if ( isFilled($title) && isFilled($date) && isFilled($time_spent) && isFilled($learned) ){
 
     //add entry
-    include('./connection.php');
     try{
-      $results = $db->prepare("INSERT INTO entries(title,date,time_spent,learned,resources) VALUES(?,?,?,?,?)");
-      $results->bindParam(1,$title);
-      $results->bindParam(2,$date);
-      $results->bindParam(3,$time_spent);
-      $results->bindParam(4,$learned);
-      $results->bindParam(5,$resources);
+      if (empty($id)){
+        $sql = "INSERT INTO entries(title,date,time_spent,learned,resources) VALUES(?,?,?,?,?)";
+      } else {
+        $sql = "UPDATE entries SET title=?, date=?, time_spent=?, learned=?, resources=? WHERE id=?";
+      }
+
+      $results = $db->prepare($sql);
+      $results->bindParam(1,$title,PDO::PARAM_STR);
+      $results->bindParam(2,$date,PDO::PARAM_STR);
+      $results->bindParam(3,$time_spent,PDO::PARAM_STR);
+      $results->bindParam(4,$learned,PDO::PARAM_STR);
+      $results->bindParam(5,$resources,PDO::PARAM_STR);
+      if (!empty($id)){
+        $results->bindParam(6,$id,PDO::PARAM_INT);
+      }
       $results->execute();
 
-      //get latest ID to help redirect
-      $grabredirect = $db->query("SELECT id FROM entries ORDER BY id DESC LIMIT 1");
-      $redirect = $grabredirect->fetch(PDO::FETCH_ASSOC);
-      header("location:detail.php?id=" . $redirect['id']);
+      if (empty($id)){
+        //get latest ID to help redirect
+        $grabredirect = $db->query("SELECT id FROM entries ORDER BY id DESC LIMIT 1");
+        $redirect = $grabredirect->fetch(PDO::FETCH_ASSOC);
+        header("location:detail.php?id=" . $redirect['id']);
+      } else {
+        header("location:detail.php?id=$id");
+      }
+
     } catch (Exception $e){
-      echo $e-getMessage();
+      echo $e->getMessage();
     }
   } else {
     $error_message = "Please fill out all required fields";
@@ -50,7 +78,7 @@ include('./inc/header.php');
 <section>
   <div class="container">
     <div class="entry">
-      <h2>New Entry</h2>
+      <h2><?php if(empty($id)){echo "New";} else {echo "Edit";} ?> Entry</h2>
       <div class="error_message">
         <p><?php echo $error_message; ?></p>
       </div>
@@ -65,7 +93,8 @@ include('./inc/header.php');
         <textarea id="what-i-learned" rows="5" name="whatILearned"><?= $learned; ?></textarea>
         <label for="resources-to-remember">Resources to Remember</label>
         <textarea id="resources-to-remember" rows="5" name="ResourcesToRemember"><?= $resources; ?></textarea>
-        <input type="submit" value="Publish Entry" class="button">
+        <input type="hidden" name="id" value="<?= $id?>" />
+        <input type="submit" value="<?php if(empty($id)){echo "Publish";} else {echo "Edit";} ?> Entry" class="button">
         <a href="#" class="button button-secondary">Cancel</a>
       </form>
     </div>

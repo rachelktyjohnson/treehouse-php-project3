@@ -2,6 +2,19 @@
 
 require_once('connection.php');
 
+if (isset($_POST['delete'])){ //this contains the ID to be deleted
+  try {
+    $idtodelete = $_POST['delete'];
+    $result = $db->prepare('DELETE FROM entries WHERE id=?');
+    $result->bindParam(1,$idtodelete,PDO::PARAM_INT);
+
+    $result->execute();
+    header("Location:index.php");
+  } catch (Exception $e){
+    echo $e->getMessage();
+  }
+}
+
 if (isset($_GET['id'])){
   $id=filter_input(INPUT_GET,'id',FILTER_SANITIZE_NUMBER_INT);
 }
@@ -61,9 +74,13 @@ include('./inc/header.php');
     </div>
   </div>
   <div class="edit">
-    <p><a href="edit.php?id=<?= $id ?>">Edit Entry</a></p>
-    <p><a>Delete Entry</a></p>
+    <p><a href="entry.php?id=<?= $id ?>">Edit Entry</a></p>
+    <form method="post" onsubmit="return confirm('Do you really want to delete this entry?');">
+      <input type="hidden" value="<?= $id;?>" name="delete" />
+      <input id="delete-entry" type="submit" value="delete entry" />
+    </form>
   </div>
+
 </section>
 
 <?php
