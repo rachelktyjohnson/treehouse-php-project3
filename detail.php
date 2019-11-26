@@ -62,6 +62,7 @@ include('./inc/header.php');
   </div>
   <div class="edit">
     <p><a href="edit.php?id=<?= $id ?>">Edit Entry</a></p>
+    <p><a>Delete Entry</a></p>
   </div>
 </section>
 

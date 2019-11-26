@@ -1,10 +1,11 @@
 /* ==========================================================================
    Global Styles
    ========================================================================== */
+
 body {
   font-size: 16px;
   color: #404a49;
-  font-family: "Cousine", serif;
+  font-family: 'Cousine', serif;
   font-weight: 400;
 }
 
@@ -13,19 +14,23 @@ body {
   padding: 0 25px;
 }
 
-header .site-header {
-  margin: 0 auto;
-  height: 95px;
-}
-header .logo i {
-  color: #678f89;
-  margin: 20px 0 0 -5px;
-  float: left;
-  font-size: 40px;
-}
-header .button {
-  float: right;
-  margin: 33px 0 0 0;
+header {
+  .site-header {
+    margin: 0 auto;
+    height: 95px;
+  }
+
+  .logo i {
+    color: #678f89;
+    margin: 20px 0 0 -5px;
+    float: left;
+    font-size: 40px;
+  }
+
+  .button {
+    float: right;
+    margin: 33px 0 0 0;
+  }
 }
 
 footer {
@@ -37,6 +42,7 @@ footer {
 /* ==========================================================================
    Button Styles
    ========================================================================== */
+
 .button {
   padding: 8px 10px 6px 10px;
   background: #678f89;
@@ -47,37 +53,44 @@ footer {
   position: relative;
   text-align: center;
   font-size: 14px;
-}
-.button.button-secondary {
-  background: #FFF;
-  border: 2px solid #e1e1e1;
-  color: #404a49;
-}
-.button.icon-right {
-  padding-right: 30px;
-  top: -10px;
-}
-.button.icon-left {
-  padding-left: 30px;
-  top: -10px;
-}
-.button.icon-right i {
-  position: absolute;
-  top: 3px;
-  right: 3px;
-}
-.button.icon-left i {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-}
-.button:focus {
-  outline: 0;
+
+  &.button-secondary {
+    background: #FFF;
+    border: 2px solid #e1e1e1;
+    color: #404a49;
+  }
+
+  &.icon-right {
+    padding-right: 30px;
+    top: -10px;
+  }
+
+  &.icon-left {
+    padding-left: 30px;
+    top: -10px;
+  }
+
+  &.icon-right i {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+  }
+
+  &.icon-left i {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+  }
+
+  &:focus {
+    outline: 0;
+  }
 }
 
 /* ==========================================================================
    Typography
    ========================================================================== */
+
 h1, h2, h3 {
   margin: 0;
   font-weight: 400;
@@ -92,15 +105,16 @@ h1 {
 
 h2 {
   font-size: 32px;
-}
-h2 a {
-  text-decoration: none;
-  color: #000;
+
+  a {
+    text-decoration: none;
+    color: #000;
+  }
 }
 
 h3 {
   font-size: 18px;
-  font-family: "Work Sans", serif;
+  font-family: 'Work Sans', serif;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -108,28 +122,31 @@ h3 {
 p {
   line-height: 1.8em;
   font-size: 18px;
-}
-p a {
-  border-bottom: 2px solid #678f89;
-  padding: 0;
-  color: #678f89;
-  text-decoration: none;
+
+  a {
+    border-bottom: 2px solid #678f89;
+    padding: 0;
+    color: #678f89;
+    text-decoration: none;
+  }
 }
 
 ul li {
   line-height: 1.8em;
   font-size: 18px;
-}
-ul li a {
-  border-bottom: 2px solid #678f89;
-  line-height: 1.8em;
-  color: #678f89;
-  text-decoration: none;
+
+  a {
+    border-bottom: 2px solid #678f89;
+    line-height: 1.8em;
+    color: #678f89;
+    text-decoration: none;
+  }
 }
 
 /* ==========================================================================
    Page Styles
    ========================================================================== */
+
 .entry-list, .edit-entry, .new-entry {
   max-width: 800px;
   margin: 0 auto;
@@ -140,41 +157,49 @@ ul li a {
   margin-bottom: 35px;
 }
 
-.entry-list article {
-  margin-bottom: 70px;
-  text-align: center;
-}
-.entry-list article:last-child {
-  margin-bottom: 0;
-}
-.entry-list article h2 {
-  margin-bottom: 8px;
-}
-.entry-list.single {
-  padding-bottom: 70px;
-}
-.entry-list.single time {
-  font-size: 18px;
+.entry-list {
+  article {
+    margin-bottom: 70px;
+    text-align: center;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      margin-bottom: 8px;
+    }
+  }
+
+  &.single {
+    padding-bottom: 70px;
+
+    time {
+      font-size: 18px;
+    }
+  }
 }
 
 .entry {
   max-width: 800px;
   margin: 75px auto 0 auto;
   text-align: left;
-}
-.entry p {
-  margin-bottom: 40px;
+
+  p {
+    margin-bottom: 40px;
+  }
 }
 
 .edit {
   padding-bottom: 80px;
   text-align: center;
   margin: 0 auto;
-}
-.edit a {
-  font-weight: 400;
-  text-transform: uppercase;
-  font-size: 18px;
+
+  a {
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 18px;
+  }
 }
 
 .entry .error_message p {
@@ -188,41 +213,54 @@ ul li a {
 /* ==========================================================================
    Form Styles
    ========================================================================== */
+
 form {
   margin-bottom: 50px;
-}
-form label {
-  display: block;
-  margin-bottom: 8px;
-}
-form input[type=text], form input[type=password], form input[type=date] {
-  border: 2px solid #e1e1e1;
-  font-size: 18px;
-  line-height: 1.8em;
-  padding: 10px 13px;
-  margin-bottom: 30px;
-  border-radius: 4px;
-  width: calc(100% - 32px);
-}
-form textarea {
-  border: 2px solid #e1e1e1;
-  font-size: 18px;
-  line-height: 1.8em;
-  padding: 10px 13px;
-  margin-bottom: 30px;
-  border-radius: 4px;
-  width: calc(100% - 32px);
-}
-form input[type=text]:focus, form input[type=date]:focus, form input[type=password]:focus {
-  outline: 0;
-  border-color: #678f89;
-}
-form textarea:focus {
-  outline: 0;
-  border-color: #678f89;
-}
-form input[type=text]:hover, form input[type=date]:hover form textarea:hover {
-  border-color: #678f89;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  input {
+    &[type=text], &[type=password], &[type=date] {
+      border: 2px solid #e1e1e1;
+      font-size: 18px;
+      line-height: 1.8em;
+      padding: 10px 13px;
+      margin-bottom: 30px;
+      border-radius: 4px;
+      width: calc(100% - 32px);
+    }
+  }
+
+  textarea {
+    border: 2px solid #e1e1e1;
+    font-size: 18px;
+    line-height: 1.8em;
+    padding: 10px 13px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+    width: calc(100% - 32px);
+  }
+
+  input {
+    &[type=text]:focus, &[type=date]:focus, &[type=password]:focus {
+      outline: 0;
+      border-color: #678f89;
+    }
+  }
+
+  textarea:focus {
+    outline: 0;
+    border-color: #678f89;
+  }
+
+  input {
+    &[type=text]:hover, &[type=date]:hover form textarea:hover {
+      border-color: #678f89;
+    }
+  }
 }
 
 .edit-entry form textarea, .new-entry form textarea {
@@ -232,5 +270,3 @@ form input[type=text]:hover, form input[type=date]:hover form textarea:hover {
 input[type=submit] {
   margin-right: 5px;
 }
-
-/*# sourceMappingURL=site.css.map */
