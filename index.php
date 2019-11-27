@@ -11,6 +11,18 @@ if(isset($_GET['tag'])){
   $pageTitle = "Entries tagged '$tag'";
   $metaTitle = "Entries tagged: " . $tag;
 }
+
+//pagination stuff
+if (isset($_GET['pg'])){
+  $page = filter_input(INPUT_GET,'pg',FILTER_SANITIZE_NUMBER_INT);
+} else {
+  $page = 1;
+}
+
+$limit = 5;
+$offset = ($page-1)*5;
+$totalPages = ceil(count(get_all_entries()) / $limit);
+
 include('./inc/header.php');
 ?>
 
@@ -20,7 +32,9 @@ include('./inc/header.php');
     <h1><?= $pageTitle; ?></h1>
     <hr />
     <div class="entry-list">
-      <?php foreach(get_entries_list($tag) as $entry) {
+      <?php
+
+      foreach(get_entries_list($tag, $limit, $offset) as $entry) {
       $vardate = explode('-',$entry['date']);
       $year = intval($vardate[0]);
       $month = date('F',mktime(0,0,0,intval($vardate[1])));
@@ -43,14 +57,15 @@ include('./inc/header.php');
       </article>
       <?php } ?>
       <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
+        <?php
+          for($i=1; $i<=$totalPages; $i++){
+            echo "<a href='index.php?pg=$i'";
+              if ($i==$page){
+                echo " class='active' ";
+              }
+            echo ">$i</a>";
+          }
+        ?>
       </div>
     </div>
 

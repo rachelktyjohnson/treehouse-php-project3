@@ -8,18 +8,29 @@ function isFilled($input){
   }
 }
 
-//function to return index.php article content
-function get_entries_list($tag=null){
+//function get all entries
+function get_all_entries(){
   include("connection.php");
-  $results = [];
+  try{
+    $results = $db->query("SELECT * FROM entries");
+  } catch (Exception $e){
+    echo $e->getMessage();
+  }
+  return $results->fetchAll();
+}
+
+//function to return index.php article content
+function get_entries_list($tag=null, $limit, $offset){
+  include("connection.php");
   try {
     $sql = "SELECT * FROM entries";
     if (isset($tag)){
       $sql .= " WHERE tags LIKE '%$tag%'";
     }
-    $sql .= " ORDER BY date DESC";
+    $sql .= " ORDER BY date DESC LIMIT ? OFFSET ?";
     $results = $db->prepare($sql);
-
+    $results->bindParam(1,$limit,PDO::PARAM_INT);
+    $results->bindParam(2,$offset,PDO::PARAM_INT);
     $results->execute();
     $entries = $results->fetchAll(PDO::FETCH_ASSOC);
     //print_r($entries);
