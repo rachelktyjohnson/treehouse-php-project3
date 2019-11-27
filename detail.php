@@ -35,6 +35,9 @@ try {
   echo $e->getMessage();
   die();
 }
+
+$metaTitle = $entry['title'];
+
 include('./inc/header.php');
 
 ?>

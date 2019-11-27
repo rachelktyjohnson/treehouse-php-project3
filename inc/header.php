@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>MyJournal</title>
+  <title><?= $metaTitle ?></title>
   <link href="https://fonts.googleapis.com/css?family=Cousine:400" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Work+Sans:600" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

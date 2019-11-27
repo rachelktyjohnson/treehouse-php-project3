@@ -1,4 +1,5 @@
 <?php
+$metaTitle = "Add new entry";
 include('./inc/connection.php');
 include('./inc/functions.php');
 $id = $title = $date = $time_spent = $learned = $resources = $tags = $error_message ="";
@@ -18,7 +19,7 @@ if (isset($_GET['id'])){
   $learned=$entry['learned'];
   $tags=$entry['tags'];
   $resources=$entry['resources'];
-
+  $metaTitle = "Updating entry: " . $entry['title'];
 }
 
 if($_SERVER['REQUEST_METHOD']=="POST"){

@@ -1,15 +1,17 @@
 <?php
-
+$metaTitle = "Personal Learning Journal";
 require_once('./inc/connection.php');
 include('./inc/functions.php');
-include('./inc/header.php');
+
 $tag=null;
+
 $pageTitle="All Entries";
 if(isset($_GET['tag'])){
   $tag = filter_input(INPUT_GET,'tag',FILTER_SANITIZE_STRING);
   $pageTitle = "Entries tagged '$tag'";
+  $metaTitle = "Entries tagged: " . $tag;
 }
-
+include('./inc/header.php');
 ?>
 
 
