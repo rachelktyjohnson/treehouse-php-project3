@@ -26,7 +26,17 @@ function get_entries_list($tag=null){
     //die();
     return $entries;
   } catch (Exception $e){
-    echo $e->getMessage();
-    die();
+    return array();
   }
+}
+
+//function to get and array-ify tags
+function get_tags($entry){
+  $tags = [];
+  $raw_tags = $entry['tags'];
+  $exploded_tags = explode(',',$raw_tags);
+  foreach ($exploded_tags as $exploded_tag){
+    $tags[] = trim($exploded_tag);
+  }
+  return $tags;
 }

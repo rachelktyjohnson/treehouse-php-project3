@@ -1,6 +1,7 @@
 <?php
 
 require_once('./inc/connection.php');
+include('./inc/functions.php');
 
 if (isset($_POST['delete'])){ //this contains the ID to be deleted
   try {
@@ -48,8 +49,20 @@ include('./inc/header.php');
         $year = intval($vardate[0]);
         $month = date('F',mktime(0,0,0,intval($vardate[1])));
         $date = intval($vardate[2]);
+        $tags = get_tags($entry);
         ?>
         <time datetime="<?= $entry['date'] ?>"><?= $month; ?> <?= $date ?>, <?= $year; ?></time>
+        -
+        <span>
+          <?php
+          $tags = get_tags($entry);
+          $tags_output = [];
+            foreach($tags as $tag){
+              $tags_output[] = "<a href='index.php?tag=$tag'>$tag</a>";
+            }
+          echo implode(", ",$tags_output);;
+          ?>
+        </span>
         <div class="entry">
           <h3>Time Spent: </h3>
           <p><?= $entry['time_spent'] ?></p>

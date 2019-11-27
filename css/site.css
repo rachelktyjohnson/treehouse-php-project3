@@ -157,6 +157,13 @@ hr {
 .entry-list article h2 {
   margin-bottom: 8px;
 }
+.entry-list article span a {
+  color: #678f89;
+  opacity: 0.6;
+}
+.entry-list article span a:hover {
+  opacity: 1;
+}
 .entry-list.single {
   padding-bottom: 70px;
 }

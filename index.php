@@ -23,10 +23,21 @@ if(isset($_GET['tag'])){
       $year = intval($vardate[0]);
       $month = date('F',mktime(0,0,0,intval($vardate[1])));
       $date = intval($vardate[2]);
+      $tags = get_tags($entry);
       ?>
       <article>
         <h2><a href="detail.php?id=<?= $entry['id']; ?>"><?= $entry['title']; ?></a></h2>
         <time datetime="<?= $entry['date'] ?>"><?= $month; ?> <?= $date ?>, <?= $year; ?></time>
+        -
+        <span>
+          <?php
+          $tags_output = [];
+            foreach($tags as $tag){
+              $tags_output[] = "<a href='index.php?tag=$tag'>$tag</a>";
+            }
+          echo implode(", ",$tags_output);;
+          ?>
+        </span>
       </article>
       <?php } ?>
     </div>

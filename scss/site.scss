@@ -176,6 +176,20 @@ hr{
     h2 {
       margin-bottom: 8px;
     }
+
+    span {
+
+
+      a{
+        color: #678f89;
+        opacity:0.6;
+
+        &:hover{
+          opacity:1;
+        }
+      }
+
+    }
   }
 
   &.single {

@@ -1,7 +1,9 @@
 <?php
 include('./inc/connection.php');
 include('./inc/functions.php');
-$id = $title = $date = $time_spent = $learned = $resources = $error_message ="";
+$id = $title = $date = $time_spent = $learned = $resources = $tags = $error_message ="";
+
+//if this is an update
 if (isset($_GET['id'])){
   $id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_NUMBER_INT);
   $results = $db->prepare('SELECT * FROM entries WHERE id=?');
@@ -14,6 +16,7 @@ if (isset($_GET['id'])){
   $date=$entry['date'];
   $time_spent=$entry['time_spent'];
   $learned=$entry['learned'];
+  $tags=$entry['tags'];
   $resources=$entry['resources'];
 
 }
@@ -23,6 +26,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
   $date = filter_input(INPUT_POST,'date',FILTER_SANITIZE_STRING);
   $time_spent = filter_input(INPUT_POST,'timeSpent',FILTER_SANITIZE_STRING);
   $learned = filter_input(INPUT_POST,'whatILearned',FILTER_SANITIZE_STRING);
+  $tags = filter_input(INPUT_POST,'tags',FILTER_SANITIZE_STRING);
   $resources = filter_input(INPUT_POST,'ResourcesToRemember',FILTER_SANITIZE_STRING);
 
   //if all inputs are filled and pass validation
@@ -31,9 +35,9 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     //add entry
     try{
       if (empty($id)){
-        $sql = "INSERT INTO entries(title,date,time_spent,learned,resources) VALUES(?,?,?,?,?)";
+        $sql = "INSERT INTO entries(title,date,time_spent,learned,resources, tags) VALUES(?,?,?,?,?,?)";
       } else {
-        $sql = "UPDATE entries SET title=?, date=?, time_spent=?, learned=?, resources=? WHERE id=?";
+        $sql = "UPDATE entries SET title=?, date=?, time_spent=?, learned=?, resources=?, tags=? WHERE id=?";
       }
 
       $results = $db->prepare($sql);
@@ -42,8 +46,9 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
       $results->bindParam(3,$time_spent,PDO::PARAM_STR);
       $results->bindParam(4,$learned,PDO::PARAM_STR);
       $results->bindParam(5,$resources,PDO::PARAM_STR);
+      $results->bindParam(6,$tags,PDO::PARAM_STR);
       if (!empty($id)){
-        $results->bindParam(6,$id,PDO::PARAM_INT);
+        $results->bindParam(7,$id,PDO::PARAM_INT);
       }
       $results->execute();
 
@@ -79,10 +84,12 @@ include('./inc/header.php');
         <input id="title" type="text" name="title" value="<?= $title; ?>"><br>
         <label for="date">Date</label>
         <input id="date" type="date" name="date" value="<?= $date; ?>"><br>
-        <label for="time-spent"> Time Spent</label>
+        <label for="time-spent">Time Spent</label>
         <input id="time-spent" type="text" name="timeSpent" value="<?= $time_spent; ?>"><br>
         <label for="what-i-learned">What I Learned</label>
         <textarea id="what-i-learned" rows="5" name="whatILearned"><?= $learned; ?></textarea>
+        <label for="tags">Tags (seperate with a comma)</label>
+        <input id="tags" type="text" name="tags" value="<?= $tags; ?>"><br>
         <label for="resources-to-remember">Resources to Remember</label>
         <textarea id="resources-to-remember" rows="5" name="ResourcesToRemember"><?= $resources; ?></textarea>
         <input type="hidden" name="id" value="<?= $id?>" />
