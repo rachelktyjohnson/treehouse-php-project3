@@ -3,6 +3,7 @@ $metaTitle = "Add new entry";
 include('./inc/connection.php');
 include('./inc/functions.php');
 $id = $title = $date = $time_spent = $learned = $resources = $tags = $error_message ="";
+$date = date('Y-m-d');
 
 //if this is an update
 if (isset($_GET['id'])){
