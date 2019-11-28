@@ -20,17 +20,17 @@ function get_all_entries(){
 }
 
 //function to return index.php article content
-function get_entries_list($tag=null, $limit, $offset){
+function get_entries_list($tag=null){
   include("connection.php");
   try {
     $sql = "SELECT * FROM entries";
     if (isset($tag)){
       $sql .= " WHERE tags LIKE '%$tag%'";
     }
-    $sql .= " ORDER BY date DESC LIMIT ? OFFSET ?";
+    $sql .= " ORDER BY date DESC";
     $results = $db->prepare($sql);
-    $results->bindParam(1,$limit,PDO::PARAM_INT);
-    $results->bindParam(2,$offset,PDO::PARAM_INT);
+    //$results->bindParam(1,$limit,PDO::PARAM_INT);
+    //$results->bindParam(2,$offset,PDO::PARAM_INT);
     $results->execute();
     $entries = $results->fetchAll(PDO::FETCH_ASSOC);
     //print_r($entries);

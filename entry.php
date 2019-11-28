@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
   $resources = filter_input(INPUT_POST,'ResourcesToRemember',FILTER_SANITIZE_STRING);
 
   //if all inputs are filled and pass validation
-  if ( isFilled($title) && isFilled($date) && isFilled($time_spent) && isFilled($learned) ){
+  if ( isFilled($title) && isFilled($date) && isFilled($time_spent) && isFilled($learned) && isFilled($tags)){
 
     //add entry
     try{
@@ -81,17 +81,17 @@ include('./inc/header.php');
         <p><?php echo $error_message; ?></p>
       </div>
       <form method="post">
-        <label for="title"> Title</label>
+        <label for="title"> Title <em>(Required)</em></label>
         <input id="title" type="text" name="title" value="<?= $title; ?>"><br>
-        <label for="date">Date</label>
+        <label for="date">Date <em>(Required)</em></label>
         <input id="date" type="date" name="date" value="<?= $date; ?>"><br>
-        <label for="time-spent">Time Spent</label>
+        <label for="time-spent">Time Spent <em>(Required)</em></label>
         <input id="time-spent" type="text" name="timeSpent" value="<?= $time_spent; ?>"><br>
-        <label for="what-i-learned">What I Learned</label>
+        <label for="what-i-learned">What I Learned <em>(Required)</em></label>
         <textarea id="what-i-learned" rows="5" name="whatILearned"><?= $learned; ?></textarea>
-        <label for="tags">Tags (seperate with a comma)</label>
+        <label for="tags">Tags <em>(Required. Seperated by a comma)</em></label>
         <input id="tags" type="text" name="tags" value="<?= $tags; ?>"><br>
-        <label for="resources-to-remember">Resources to Remember</label>
+        <label for="resources-to-remember">Resources to Remember <em>(Optional, but suggested!)</em></label>
         <textarea id="resources-to-remember" rows="5" name="ResourcesToRemember"><?= $resources; ?></textarea>
         <input type="hidden" name="id" value="<?= $id?>" />
         <input type="submit" value="<?php if(empty($id)){echo "Publish";} else {echo "Save";} ?> Entry" class="button">

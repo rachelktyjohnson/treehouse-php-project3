@@ -13,6 +13,7 @@ if(isset($_GET['tag'])){
 }
 
 //pagination stuff
+/*
 if (isset($_GET['pg'])){
   $page = filter_input(INPUT_GET,'pg',FILTER_SANITIZE_NUMBER_INT);
 } else {
@@ -21,7 +22,7 @@ if (isset($_GET['pg'])){
 
 $limit = 5;
 $offset = ($page-1)*5;
-$totalPages = ceil(count(get_all_entries()) / $limit);
+$totalPages = ceil(count(get_all_entries()) / $limit);*/
 
 include('./inc/header.php');
 ?>
@@ -34,7 +35,7 @@ include('./inc/header.php');
     <div class="entry-list">
       <?php
 
-      foreach(get_entries_list($tag, $limit, $offset) as $entry) {
+      foreach(get_entries_list($tag) as $entry) {
       $vardate = explode('-',$entry['date']);
       $year = intval($vardate[0]);
       $month = date('F',mktime(0,0,0,intval($vardate[1])));
@@ -48,25 +49,27 @@ include('./inc/header.php');
         <span>
           <?php
           $tags_output = [];
-            foreach($tags as $tag){
-              $tags_output[] = "<a href='index.php?tag=$tag'>$tag</a>";
-            }
-          echo implode(", ",$tags_output);;
+          foreach($tags as $tag){
+            $tags_output[] = "<a href='index.php?tag=$tag'>$tag</a>";
+          }
+          echo implode(", ",$tags_output);
           ?>
         </span>
       </article>
       <?php } ?>
+      <!--
       <div class="pagination">
         <?php
-          for($i=1; $i<=$totalPages; $i++){
+          /*for($i=1; $i<=$totalPages; $i++){
             echo "<a href='index.php?pg=$i'";
               if ($i==$page){
                 echo " class='active' ";
               }
             echo ">$i</a>";
-          }
+          }*/
         ?>
       </div>
+      -->
     </div>
 
   </div>
