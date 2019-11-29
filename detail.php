@@ -3,37 +3,37 @@
 require_once('./inc/connection.php');
 include('./inc/functions.php');
 
-if (isset($_POST['delete'])){ //this contains the ID to be deleted
-  try {
-    $idtodelete = $_POST['delete'];
-    $result = $db->prepare('DELETE FROM entries WHERE id=?');
-    $result->bindParam(1,$idtodelete,PDO::PARAM_INT);
+if (isset($_POST['delete'])) { //this contains the ID to be deleted
+    try {
+        $idtodelete = $_POST['delete'];
+        $result = $db->prepare('DELETE FROM entries WHERE id=?');
+        $result->bindParam(1, $idtodelete, PDO::PARAM_INT);
 
-    $result->execute();
-    header("Location:index.php");
-  } catch (Exception $e){
-    echo $e->getMessage();
-  }
+        $result->execute();
+        header("Location:index.php");
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
 }
 
-if (isset($_GET['id'])){
-  $id=filter_input(INPUT_GET,'id',FILTER_SANITIZE_NUMBER_INT);
+if (isset($_GET['id'])) {
+    $id=filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 }
 
 try {
-  $results = $db->prepare('SELECT * FROM entries WHERE id=?');
-  $results->bindParam(1,$id,PDO::PARAM_INT);
-  $results->execute();
+    $results = $db->prepare('SELECT * FROM entries WHERE id=?');
+    $results->bindParam(1, $id, PDO::PARAM_INT);
+    $results->execute();
 
-  $entry = $results->fetch(PDO::FETCH_ASSOC);
-  if (empty($entry)){
-    header("location:index.php");
-  }
-  //print_r($entry);
+    $entry = $results->fetch(PDO::FETCH_ASSOC);
+    if (empty($entry)) {
+        header("location:index.php");
+    }
+    //print_r($entry);
   //die();
-} catch (Exception $e){
-  echo $e->getMessage();
-  die();
+} catch (Exception $e) {
+    echo $e->getMessage();
+    die();
 }
 
 $metaTitle = $entry['title'];
@@ -48,9 +48,9 @@ include('./inc/header.php');
       <article>
         <h1><?= $entry['title']; ?></h1>
         <?php
-        $vardate = explode('-',$entry['date']);
+        $vardate = explode('-', $entry['date']);
         $year = intval($vardate[0]);
-        $month = date('F',mktime(0,0,0,intval($vardate[1])));
+        $month = date('F', mktime(0, 0, 0, intval($vardate[1])));
         $date = intval($vardate[2]);
         $tags = get_tags($entry);
         ?>
@@ -60,10 +60,10 @@ include('./inc/header.php');
           <?php
           $tags = get_tags($entry);
           $tags_output = [];
-            foreach($tags as $tag){
-              $tags_output[] = "<a href='index.php?tag=$tag'>$tag</a>";
+            foreach ($tags as $tag) {
+                $tags_output[] = "<a href='index.php?tag=$tag'>$tag</a>";
             }
-          echo implode(", ",$tags_output);;
+          echo implode(", ", $tags_output);;
           ?>
         </span>
         <div class="entry">
@@ -78,10 +78,10 @@ include('./inc/header.php');
           <h3>Resources to Remember:</h3>
           <p>
           <?php
-          if (!empty($entry['resources'])){
-            echo $entry['resources'];
+          if (!empty($entry['resources'])) {
+              echo $entry['resources'];
           } else {
-            echo "None";
+              echo "None";
           }
           ?>
           </p>
